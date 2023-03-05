@@ -1,0 +1,36 @@
+.inputContainer {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.inputField {
+  font-size: 1rem;
+  padding: 0.7rem;
+  width: 100%;
+  border: none;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  transition: border-color 0.2s ease-in-out;
+  background-color: transparent;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #333333;
+}
+
+.inputLabel {
+  position: absolute;
+  top: 0.75rem;
+  left: 12px;
+  font-size: 1rem;
+  color: #ccc;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.active {
+  top: 0;
+  font-size: 0.75rem;
+  color: #333333;
+}
