@@ -1,12 +1,14 @@
 .inputContainer {
   position: relative;
   margin-bottom: 1rem;
+  height: 56px;
 }
 
 .inputField {
   font-size: 1rem;
   padding: 0.7rem;
   width: 100%;
+  height: 100%;
   border: none;
   border: 2px solid #ccc;
   border-radius: 12px;
@@ -21,7 +23,8 @@
 
 .inputLabel {
   position: absolute;
-  top: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
   left: 12px;
   font-size: 1rem;
   color: #ccc;
@@ -30,7 +33,7 @@
 }
 
 .active {
-  top: 0;
+  top: 0.65rem;
   font-size: 0.75rem;
   color: #333333;
 }

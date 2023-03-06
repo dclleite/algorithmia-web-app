@@ -1,0 +1,20 @@
+.matrix {
+  border-collapse: collapse;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cell {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  font-weight: normal;
+  font-size: 1rem;
+  height: 2.5rem;
+  text-align: center;
+  width: 2.5rem;
+}
+
+.selectedCell {
+  background-color: #e6e6fa;
+  font-weight: bold;
+}

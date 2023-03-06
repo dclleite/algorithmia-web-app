@@ -1,11 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import styles from "./styles.module.css";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
-function Input({ label, onChange, name, ...rest }: InputProps) {
+const Input = ({ placeholder, onChange, name, ...rest }: React.InputHTMLAttributes<HTMLInputElement>) => {
   const [isActive, setIsActive] = useState(false);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -32,7 +28,7 @@ function Input({ label, onChange, name, ...rest }: InputProps) {
         className={`${styles.inputLabel} ${isActive ? styles.active : ""}`}
         htmlFor={name}
       >
-        {label}
+        {placeholder}
       </label>
     </div>
   );
