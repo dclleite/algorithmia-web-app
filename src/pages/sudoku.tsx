@@ -4,6 +4,7 @@ import Head from "next/head";
 import Button from "@components/button";
 import Textarea from "@components/text-area";
 import Matrix from "@components/matrix";
+import Loader from "@components/circular-loading";
 
 import { getSudokuSolution } from '@api/sudoku'
 
@@ -25,6 +26,7 @@ function getNonZeroPositions(matrix: number[][]): [number, number][] {
 
 export default function Sudoku() {
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [matrixData, setMatrixData] = useState<number[][]>([])
   const [selectedCells, setSelectedCells] = useState<[number, number][]>([])
 
@@ -35,7 +37,7 @@ export default function Sudoku() {
 
   async function handleButtonClick() {
     if (inputValue.trim() !== "") {
-
+      setIsLoading(true);
       const matrix = inputValue.split('\n').map((row) => row.trim().split(',').map((num) => Number(num.trim())))
 
       const { data } = await getSudokuSolution(matrix)
@@ -44,6 +46,7 @@ export default function Sudoku() {
         setSelectedCells(getNonZeroPositions(matrix))
         setMatrixData(data.solution)
       }
+      setIsLoading(false);
     }
   }
 
@@ -72,7 +75,10 @@ export default function Sudoku() {
             </Button>
           </div>
           <div className={styles.result}>
-            <Matrix data={matrixData} selectedCells={selectedCells} />
+            {isLoading
+              ? <Loader color="#333333" size="80px" />
+              : <Matrix data={matrixData} selectedCells={selectedCells} />
+            }
           </div>
         </div>
       </main>

@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333333;
+  margin-left: 1rem;
+}
+
+.circular_loading {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #333333;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

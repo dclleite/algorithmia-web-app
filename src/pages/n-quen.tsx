@@ -4,6 +4,7 @@ import Head from "next/head";
 import Button from "@components/button";
 import Input from "@components/text-input";
 import Matrix from "@components/matrix";
+import Loader from "@components/circular-loading";
 
 import { getNqueenSolution } from '@api/n-queen'
 
@@ -23,6 +24,7 @@ function createNQueenBoard(n: number, positions: [number, number][]): string[][]
 
 export default function NQueen() {
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [matrixData, setMatrixData] = useState<string[][]>([])
   const [selectedCells, setSelectedCells] = useState<[number, number][]>([])
 
@@ -32,11 +34,13 @@ export default function NQueen() {
 
   async function handleButtonClick() {
     if (inputValue.trim() !== "") {
+      setIsLoading(true)
       const { data } = await getNqueenSolution(Number(inputValue))
       if (data.solution?.length) {
         setMatrixData(createNQueenBoard(data.solution.length, data.solution))
         setSelectedCells(data.solution)
       }
+      setIsLoading(false);
     }
   }
 
@@ -64,7 +68,10 @@ export default function NQueen() {
             </Button>
           </div>
           <div className={styles.result}>
-            <Matrix data={matrixData} selectedCells={selectedCells} />
+            {isLoading
+              ? <Loader color="#333333" size="80px" />
+              : <Matrix data={matrixData} selectedCells={selectedCells} />
+            }
           </div>
         </div>
       </main>
