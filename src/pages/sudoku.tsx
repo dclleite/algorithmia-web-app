@@ -2,40 +2,47 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 
 import Button from "@components/button";
-import Input from "@components/text-input";
+import Textarea from "@components/text-area";
 import Matrix from "@components/matrix";
 
-import { getNqueenSolution } from '@api/n-queen'
+import { getSudokuSolution } from '@api/sudoku'
 
 import styles from "@styles/NQuen.module.css";
 
-function createNQueenBoard(n: number, positions: [number, number][]): string[][] {
-  const matrix = Array(n).fill(null).map(() => Array(n).fill(''));
+function getNonZeroPositions(matrix: number[][]): [number, number][] {
+  const nonZeroPositions: [number, number][] = [];
 
-  positions.forEach((row) => {
-    for (let i = 0; i < n; i++) {
-      matrix[row[0]][row[1]] = 'Q';
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] !== 0) {
+        nonZeroPositions.push([i, j]);
+      }
     }
-  });
+  }
 
-  return matrix;
+  return nonZeroPositions;
 }
 
-export default function NQueen() {
+export default function Sudoku() {
   const [inputValue, setInputValue] = useState("");
-  const [matrixData, setMatrixData] = useState<string[][]>([])
+  const [matrixData, setMatrixData] = useState<number[][]>([])
   const [selectedCells, setSelectedCells] = useState<[number, number][]>([])
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+
+  function handleInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setInputValue(event.target.value);
   }
 
   async function handleButtonClick() {
     if (inputValue.trim() !== "") {
-      const { data } = await getNqueenSolution(Number(inputValue))
+
+      const matrix = inputValue.split('\n').map((row) => row.trim().split(',').map((num) => Number(num.trim())))
+
+      const { data } = await getSudokuSolution(matrix)
+
       if (data.solution?.length) {
-        setMatrixData(createNQueenBoard(data.solution.length, data.solution))
-        setSelectedCells(data.solution)
+        setSelectedCells(getNonZeroPositions(matrix))
+        setMatrixData(data.solution)
       }
     }
   }
@@ -43,21 +50,22 @@ export default function NQueen() {
   return (
     <>
       <Head>
-        <title>N-queen problem</title>
-        <meta name="description" content="N-queen problem" />
+        <title>sudoku problem</title>
+        <meta name="description" content="sudoku problem" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <main className={styles.container}>
-        <h1 className={styles.title}>N-queen problem</h1>
+        <h1 className={styles.title}>Sudoku problem</h1>
 
         <div className={styles.grid}>
           <div className={styles.card}>
-            <Input
-              type="number"
+            <h3></h3>
+            <Textarea
               value={inputValue}
               onChange={handleInputChange}
-              placeholder="n-queens"
+              placeholder="sudoku board"
+              rows={9}
             />
             <Button onClick={handleButtonClick}>
               Generate result
