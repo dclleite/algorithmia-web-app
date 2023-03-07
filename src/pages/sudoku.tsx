@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Head from "next/head";
 
 import Button from "@components/button";
@@ -7,7 +7,7 @@ import Matrix from "@components/matrix";
 
 import { getSudokuSolution } from '@api/sudoku'
 
-import styles from "@styles/NQuen.module.css";
+import styles from "@styles/Problems-screens.module.css";
 
 function getNonZeroPositions(matrix: number[][]): [number, number][] {
   const nonZeroPositions: [number, number][] = [];
